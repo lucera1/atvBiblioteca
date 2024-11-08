@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class LivroDTO {
 
 
-    private long id;
+    private Long id;
 
     @NotNull(message = "O campo titulo não pode ser nulo")
     @NotBlank(message = "O campo titulo não pode estar em branco")
@@ -67,11 +67,11 @@ public class LivroDTO {
         this.conservacao = livro.getConservacao().getId();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

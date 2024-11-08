@@ -1,6 +1,8 @@
 package com.curso.domains;
 
 
+import com.curso.domains.dtos.AutorDTO;
+import com.curso.domains.dtos.LivroDTO;
 import com.curso.domains.enums.Conservacao;
 import com.curso.domains.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,12 +21,13 @@ public class Livro{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_livro")
-    private long idLivro;
+    private Long idLivro;
 
     @NotNull @NotBlank
     private String titulo;
 
     @NotNull @NotBlank
+    @Column(unique = true)
     private String isbn;
 
     @NotNull
@@ -57,7 +60,7 @@ public class Livro{
 
     }
 
-    public Livro(long idLivro, String titulo, String isbn, int numeroPaginas,
+    public Livro(Long idLivro, String titulo, String isbn, int numeroPaginas,
                  LocalDate dataCompra, BigDecimal valorCompra,
                  Status status, Conservacao conservacao, Autor autor,
                  Editora editora) {
@@ -73,12 +76,30 @@ public class Livro{
         this.editora = editora;
     }
 
+    public Livro(LivroDTO dto){
+        this.idLivro = dto.getId();
+        this.titulo = dto.getTitulo();
+        this.isbn = dto.getIsbn();
+        this.numeroPaginas = dto.getNumeroPaginas();
+        this.dataCompra = dto.getDataCompra();
+        this.valorCompra = dto.getValorCompra();
+        this.status = Status.toEnum(dto.getStatus());
+        this.conservacao = Conservacao.toEnum(dto.getConservacao());
+        this.autor = new Autor();
+        this.autor.setId(dto.getAutor());
+        this.autor.setNome(dto.getNomeAutor());
+        this.editora = new Editora();
+        this.editora.setId(dto.getEditora());
+        this.editora.setRazaoSocial(dto.getRazaoSocial());
 
-    public long getIdLivro() {
+    }
+
+
+    public Long getIdLivro() {
         return idLivro;
     }
 
-    public void setIdLivro(long idLivro) {
+    public void setIdLivro(Long idLivro){
         this.idLivro = idLivro;
     }
 
